@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.mikgeek</groupId>
+        <artifactId>mikgeek-cloud</artifactId>
+        <version>1.8.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>mikgeek-common-bom</module>
+        <module>mikgeek-common-alibaba-bom</module>
+        <module>mikgeek-common-log</module>
+        <module>mikgeek-common-dict</module>
+        <module>mikgeek-common-excel</module>
+        <module>mikgeek-common-core</module>
+        <module>mikgeek-common-redis</module>
+        <module>mikgeek-common-doc</module>
+        <module>mikgeek-common-security</module>
+        <module>mikgeek-common-satoken</module>
+        <module>mikgeek-common-web</module>
+        <module>mikgeek-common-mybatis</module>
+        <module>mikgeek-common-job</module>
+        <module>mikgeek-common-dubbo</module>
+        <module>mikgeek-common-seata</module>
+        <module>mikgeek-common-loadbalancer</module>
+        <module>mikgeek-common-oss</module>
+        <module>mikgeek-common-idempotent</module>
+        <module>mikgeek-common-mail</module>
+        <module>mikgeek-common-sms</module>
+        <module>mikgeek-common-logstash</module>
+        <module>mikgeek-common-elasticsearch</module>
+        <module>mikgeek-common-sentinel</module>
+        <module>mikgeek-common-skylog</module>
+        <module>mikgeek-common-prometheus</module>
+        <module>mikgeek-common-translation</module>
+        <module>mikgeek-common-encrypt</module>
+    </modules>
+
+    <artifactId>mikgeek-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        mikgeek-common通用模块
+    </description>
+
+</project>

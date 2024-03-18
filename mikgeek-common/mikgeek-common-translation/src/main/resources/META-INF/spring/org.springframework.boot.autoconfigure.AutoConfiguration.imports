@@ -1,0 +1,5 @@
+com.mikgeek.common.translation.config.TranslationConfig
+com.mikgeek.common.translation.core.impl.DeptNameTranslationImpl
+com.mikgeek.common.translation.core.impl.DictTypeTranslationImpl
+com.mikgeek.common.translation.core.impl.OssUrlTranslationImpl
+com.mikgeek.common.translation.core.impl.UserNameTranslationImpl

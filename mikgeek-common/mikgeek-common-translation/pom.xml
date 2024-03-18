@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.mikgeek</groupId>
+        <artifactId>mikgeek-common</artifactId>
+        <version>1.8.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mikgeek-common-translation</artifactId>
+
+    <description>
+        mikgeek-common-translation 通用翻译功能
+    </description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.mikgeek</groupId>
+            <artifactId>mikgeek-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mikgeek</groupId>
+            <artifactId>mikgeek-common-dict</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mikgeek</groupId>
+            <artifactId>mikgeek-common-dubbo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mikgeek</groupId>
+            <artifactId>mikgeek-api-resource</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>
