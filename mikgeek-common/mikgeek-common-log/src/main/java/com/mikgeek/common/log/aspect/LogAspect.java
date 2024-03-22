@@ -13,7 +13,7 @@ import com.mikgeek.common.log.annotation.Log;
 import com.mikgeek.common.log.enums.BusinessStatus;
 import com.mikgeek.common.log.event.OperLogEvent;
 import com.mikgeek.common.satoken.utils.LoginHelper;
-import com.mikgeek.system.api.model.LoginUser;
+import com.mikgeek.member.api.model.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

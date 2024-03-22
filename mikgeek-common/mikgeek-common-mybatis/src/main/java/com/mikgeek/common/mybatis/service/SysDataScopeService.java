@@ -1,6 +1,6 @@
 package com.mikgeek.common.mybatis.service;
 
-import com.mikgeek.system.api.RemoteDataScopeService;
+import com.mikgeek.member.api.RemoteDataScopeService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 

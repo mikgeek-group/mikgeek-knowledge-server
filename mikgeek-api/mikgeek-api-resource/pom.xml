@@ -23,6 +23,12 @@
             <artifactId>mikgeek-common-core</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.mikgeek</groupId>
+            <artifactId>mikgeek-common-excel</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

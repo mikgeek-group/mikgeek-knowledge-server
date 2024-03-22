@@ -43,7 +43,7 @@
         <!-- mikgeek Api System -->
         <dependency>
             <groupId>com.mikgeek</groupId>
-            <artifactId>mikgeek-api-system</artifactId>
+            <artifactId>mikgeek-api-member</artifactId>
         </dependency>
 
         <!-- mikgeek Common Redis-->

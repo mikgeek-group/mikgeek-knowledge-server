@@ -6,8 +6,8 @@ import com.mikgeek.common.core.constant.CacheConstants;
 import com.mikgeek.common.core.service.DictService;
 import com.mikgeek.common.core.utils.StreamUtils;
 import com.mikgeek.common.core.utils.StringUtils;
-import com.mikgeek.system.api.RemoteDictService;
-import com.mikgeek.system.api.domain.SysDictData;
+import com.mikgeek.resource.api.RemoteDictService;
+import com.mikgeek.resource.api.domain.SysDictData;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 

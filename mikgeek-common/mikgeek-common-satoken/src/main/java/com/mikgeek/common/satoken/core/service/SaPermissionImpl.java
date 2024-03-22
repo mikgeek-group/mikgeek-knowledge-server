@@ -3,7 +3,7 @@ package com.mikgeek.common.satoken.core.service;
 import cn.dev33.satoken.stp.StpInterface;
 import com.mikgeek.common.core.enums.UserType;
 import com.mikgeek.common.satoken.utils.LoginHelper;
-import com.mikgeek.system.api.model.LoginUser;
+import com.mikgeek.member.api.model.LoginUser;
 
 import java.util.ArrayList;
 import java.util.List;

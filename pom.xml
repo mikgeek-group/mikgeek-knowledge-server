@@ -348,7 +348,9 @@
         <module>mikgeek-auth</module>
         <module>mikgeek-gateway</module>
         <module>mikgeek-visual</module>
-        <module>mikgeek-modules</module>
+        <module>mikgeek-resource</module>
+        <module>mikgeek-member</module>
+        <module>mikgeek-job</module>
         <module>mikgeek-api</module>
         <module>mikgeek-common</module>
         <module>mikgeek-example</module>

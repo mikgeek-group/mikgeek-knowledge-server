@@ -2,7 +2,7 @@ package com.mikgeek.common.dict.utils;
 
 import com.mikgeek.common.core.constant.CacheNames;
 import com.mikgeek.common.redis.utils.CacheUtils;
-import com.mikgeek.system.api.domain.SysDictData;
+import com.mikgeek.resource.api.domain.SysDictData;
 
 import java.util.List;
 

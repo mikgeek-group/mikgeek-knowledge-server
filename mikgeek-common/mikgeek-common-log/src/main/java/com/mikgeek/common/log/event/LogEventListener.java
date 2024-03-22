@@ -1,9 +1,9 @@
 package com.mikgeek.common.log.event;
 
 import com.mikgeek.common.core.utils.BeanCopyUtils;
-import com.mikgeek.system.api.RemoteLogService;
-import com.mikgeek.system.api.domain.SysLogininfor;
-import com.mikgeek.system.api.domain.SysOperLog;
+import com.mikgeek.member.api.RemoteLogService;
+import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.api.domain.SysOperLog;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

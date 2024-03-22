@@ -10,7 +10,7 @@
 
     <modules>
         <module>mikgeek-api-bom</module>
-        <module>mikgeek-api-system</module>
+        <module>mikgeek-api-member</module>
         <module>mikgeek-api-resource</module>
     </modules>
 

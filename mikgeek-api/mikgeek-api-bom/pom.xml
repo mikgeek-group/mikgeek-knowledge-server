@@ -19,7 +19,7 @@
             <!-- 系统接口 -->
             <dependency>
                 <groupId>com.mikgeek</groupId>
-                <artifactId>mikgeek-api-system</artifactId>
+                <artifactId>mikgeek-api-member</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

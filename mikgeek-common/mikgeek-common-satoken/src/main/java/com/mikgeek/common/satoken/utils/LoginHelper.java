@@ -10,7 +10,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.mikgeek.common.core.constant.UserConstants;
 import com.mikgeek.common.core.enums.DeviceType;
 import com.mikgeek.common.core.enums.UserType;
-import com.mikgeek.system.api.model.LoginUser;
+import com.mikgeek.member.api.model.LoginUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -7,7 +7,7 @@ import com.mikgeek.common.core.exception.ServiceException;
 import com.mikgeek.common.core.utils.StringUtils;
 import com.mikgeek.common.core.web.domain.BaseEntity;
 import com.mikgeek.common.satoken.utils.LoginHelper;
-import com.mikgeek.system.api.model.LoginUser;
+import com.mikgeek.member.api.model.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 
