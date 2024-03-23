@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * token 控制
+ * 用户鉴权登录
  *
  * @author Lion Li
  */

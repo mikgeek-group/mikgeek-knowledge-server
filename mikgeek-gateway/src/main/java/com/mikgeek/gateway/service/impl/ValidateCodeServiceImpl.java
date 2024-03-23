@@ -77,7 +77,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
     @Override
     public void checkCaptcha(String code, String uuid) throws CaptchaException {
         if (StringUtils.isEmpty(code)) {
-            throw new CaptchaException("user.jcaptcha.not.blank");
+            throw new CaptchaException("验证码不能为空");
         }
         if (StringUtils.isEmpty(uuid)) {
             throw new CaptchaExpireException();
