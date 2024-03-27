@@ -45,7 +45,7 @@ public class DictServiceImpl implements DictService {
             SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
 
-        Map<String, String> map = StreamUtils.toMap(datas, SysDictData::getDictValue, SysDictData::getDictLabel);
+        Map<String, String> map = StreamUtils.toMap(datas, SysDictData::getValue, SysDictData::getLabel);
         if (StringUtils.containsAny(dictValue, separator)) {
             return Arrays.stream(dictValue.split(separator))
                 .map(v -> map.getOrDefault(v, StringUtils.EMPTY))
@@ -73,7 +73,7 @@ public class DictServiceImpl implements DictService {
             SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
 
-        Map<String, String> map = StreamUtils.toMap(datas, SysDictData::getDictLabel, SysDictData::getDictValue);
+        Map<String, String> map = StreamUtils.toMap(datas, SysDictData::getLabel, SysDictData::getValue);
         if (StringUtils.containsAny(dictLabel, separator)) {
             return Arrays.stream(dictLabel.split(separator))
                 .map(l -> map.getOrDefault(l, StringUtils.EMPTY))
@@ -86,7 +86,7 @@ public class DictServiceImpl implements DictService {
     @Override
     public Map<String, String> getAllDictByDictType(String dictType) {
         List<SysDictData> list = remoteDictService.selectDictDataByType(dictType);
-        return StreamUtils.toMap(list, SysDictData::getDictValue, SysDictData::getDictLabel);
+        return StreamUtils.toMap(list, SysDictData::getValue, SysDictData::getLabel);
     }
 
 }

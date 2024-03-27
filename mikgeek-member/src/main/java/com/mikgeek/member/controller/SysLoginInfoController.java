@@ -10,8 +10,8 @@ import com.mikgeek.common.log.enums.BusinessType;
 import com.mikgeek.common.mybatis.core.page.PageQuery;
 import com.mikgeek.common.mybatis.core.page.TableDataInfo;
 import com.mikgeek.common.redis.utils.RedisUtils;
-import com.mikgeek.member.service.ISysLogininforService;
-import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.service.ISysLoginInfoService;
+import com.mikgeek.member.api.domain.SysLoginInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,17 +27,17 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/logininfor")
-public class SysLogininforController extends BaseController {
+@RequestMapping("/loginInfo")
+public class SysLoginInfoController extends BaseController {
 
-    private final ISysLogininforService logininforService;
+    private final ISysLoginInfoService logininforService;
 
     /**
      * 查询系统访问记录列表
      */
-    @SaCheckPermission("system:logininfor:list")
+    @SaCheckPermission("system:loginInfo:list")
     @GetMapping("/list")
-    public TableDataInfo<SysLogininfor> list(SysLogininfor logininfor, PageQuery pageQuery) {
+    public TableDataInfo<SysLoginInfo> list(SysLoginInfo logininfor, PageQuery pageQuery) {
         return logininforService.selectPageLogininforList(logininfor, pageQuery);
     }
 
@@ -45,11 +45,11 @@ public class SysLogininforController extends BaseController {
      * 导出系统访问记录列表
      */
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
-    @SaCheckPermission("system:logininfor:export")
+    @SaCheckPermission("system:loginInfo:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLogininfor logininfor) {
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
+    public void export(HttpServletResponse response, SysLoginInfo logininfor) {
+        List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
+        ExcelUtil.exportExcel(list, "登录日志", SysLoginInfo.class, response);
     }
 
     /**
@@ -57,7 +57,7 @@ public class SysLogininforController extends BaseController {
      *
      * @param infoIds 记录ID串
      */
-    @SaCheckPermission("system:logininfor:remove")
+    @SaCheckPermission("system:loginInfo:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
     public R<Void> remove(@PathVariable Long[] infoIds) {
@@ -67,7 +67,7 @@ public class SysLogininforController extends BaseController {
     /**
      * 清空系统访问记录
      */
-    @SaCheckPermission("system:logininfor:remove")
+    @SaCheckPermission("system:loginInfo:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/clean")
     public R<Void> clean() {
@@ -75,7 +75,7 @@ public class SysLogininforController extends BaseController {
         return R.ok();
     }
 
-    @SaCheckPermission("system:logininfor:unlock")
+    @SaCheckPermission("system:loginInfo:unlock")
     @Log(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")
     public R<Void> unlock(@PathVariable("userName") String userName) {

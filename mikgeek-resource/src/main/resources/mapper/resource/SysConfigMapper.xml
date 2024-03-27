@@ -4,12 +4,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mikgeek.resource.mapper.SysConfigMapper">
 
-    <resultMap type="SysConfig" id="SysConfigResult">
-        <id property="configId" column="config_id"/>
-        <result property="configName" column="config_name"/>
+    <resultMap type="com.mikgeek.resource.domain.SysConfig" id="SysConfigResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
         <result property="configKey" column="config_key"/>
-        <result property="configValue" column="config_value"/>
-        <result property="configType" column="config_type"/>
+        <result property="configKey" column="config_value"/>
+        <result property="type" column="type"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>

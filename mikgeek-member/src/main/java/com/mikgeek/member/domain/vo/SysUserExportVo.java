@@ -24,7 +24,7 @@ public class SysUserExportVo implements Serializable {
      * 用户ID
      */
     @ExcelProperty(value = "用户序号")
-    private Long userId;
+    private Long id;
 
     /**
      * 用户账号
@@ -48,7 +48,7 @@ public class SysUserExportVo implements Serializable {
      * 手机号码
      */
     @ExcelProperty(value = "手机号码")
-    private String phonenumber;
+    private String mobile;
 
     /**
      * 用户性别

@@ -23,17 +23,17 @@ import java.util.Map;
 
 @Data
 @NoArgsConstructor
-@TableName("sys_logininfor")
+@TableName("sys_login_info")
 @ExcelIgnoreUnannotated
-public class SysLogininfor implements Serializable {
+public class SysLoginInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * ID
      */
     @ExcelProperty(value = "序号")
-    @TableId(value = "info_id")
-    private Long infoId;
+    @TableId(value = "id")
+    private Long id;
 
     /**
      * 用户账号

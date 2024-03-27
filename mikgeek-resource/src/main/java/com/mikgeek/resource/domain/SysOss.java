@@ -16,11 +16,6 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_oss")
 public class SysOss extends BaseEntity {
 
-    /**
-     * 对象存储主键
-     */
-    @TableId(value = "oss_id")
-    private Long ossId;
 
     /**
      * 文件名

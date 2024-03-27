@@ -4,12 +4,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mikgeek.member.mapper.SysDeptMapper">
 
-    <resultMap type="SysDept" id="SysDeptResult">
-        <id property="deptId" column="dept_id"/>
+    <resultMap type="com.mikgeek.member.api.domain.SysDept" id="SysDept">
+        <id property="id" column="id"/>
         <result property="parentId" column="parent_id"/>
         <result property="ancestors" column="ancestors"/>
-        <result property="deptName" column="dept_name"/>
-        <result property="orderNum" column="order_num"/>
+        <result property="name" column="name"/>
+        <result property="sort" column="sort"/>
         <result property="leader" column="leader"/>
         <result property="phone" column="phone"/>
         <result property="email" column="email"/>
@@ -22,13 +22,13 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <select id="selectDeptList" resultMap="SysDeptResult">
+    <select id="selectDeptList" resultMap="SysDept">
         select *
         from sys_dept ${ew.getCustomSqlSegment}
     </select>
 
     <select id="selectDeptListByRoleId" resultType="Long">
-        select d.dept_id
+        select d.id as dept_id
         from sys_dept d
         left join sys_role_dept rd on d.dept_id = rd.dept_id
         where rd.role_id = #{roleId}

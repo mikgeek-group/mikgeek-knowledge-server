@@ -28,18 +28,12 @@ import javax.validation.constraints.Size;
 @ExcelIgnoreUnannotated
 public class SysDictData extends BaseEntity {
 
-    /**
-     * 字典编码
-     */
-    @ExcelProperty(value = "字典编码")
-    @TableId(value = "dict_code")
-    private Long dictCode;
 
     /**
      * 字典排序
      */
     @ExcelProperty(value = "字典排序")
-    private Integer dictSort;
+    private Integer sort;
 
     /**
      * 字典标签
@@ -47,7 +41,7 @@ public class SysDictData extends BaseEntity {
     @ExcelProperty(value = "字典标签")
     @NotBlank(message = "字典标签不能为空")
     @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
-    private String dictLabel;
+    private String label;
 
     /**
      * 字典键值
@@ -55,7 +49,7 @@ public class SysDictData extends BaseEntity {
     @ExcelProperty(value = "字典键值")
     @NotBlank(message = "字典键值不能为空")
     @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
-    private String dictValue;
+    private String value;
 
     /**
      * 字典类型

@@ -42,9 +42,9 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     public TableDataInfo<SysDictType> selectPageDictTypeList(SysDictType dictType, PageQuery pageQuery) {
         Map<String, Object> params = dictType.getParams();
         LambdaQueryWrapper<SysDictType> lqw = new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictType.getDictName()), SysDictType::getDictName, dictType.getDictName())
+            .like(StringUtils.isNotBlank(dictType.getName()), SysDictType::getName, dictType.getName())
             .eq(StringUtils.isNotBlank(dictType.getStatus()), SysDictType::getStatus, dictType.getStatus())
-            .like(StringUtils.isNotBlank(dictType.getDictType()), SysDictType::getDictType, dictType.getDictType())
+            .like(StringUtils.isNotBlank(dictType.getType()), SysDictType::getType, dictType.getType())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
                 SysDictType::getCreateTime, params.get("beginTime"), params.get("endTime"));
         Page<SysDictType> page = baseMapper.selectPage(pageQuery.build(), lqw);
@@ -61,9 +61,9 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     public List<SysDictType> selectDictTypeList(SysDictType dictType) {
         Map<String, Object> params = dictType.getParams();
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictType.getDictName()), SysDictType::getDictName, dictType.getDictName())
+            .like(StringUtils.isNotBlank(dictType.getName()), SysDictType::getName, dictType.getName())
             .eq(StringUtils.isNotBlank(dictType.getStatus()), SysDictType::getStatus, dictType.getStatus())
-            .like(StringUtils.isNotBlank(dictType.getDictType()), SysDictType::getDictType, dictType.getDictType())
+            .like(StringUtils.isNotBlank(dictType.getType()), SysDictType::getType, dictType.getType())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
                 SysDictType::getCreateTime, params.get("beginTime"), params.get("endTime")));
     }
@@ -113,7 +113,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      */
     @Override
     public SysDictType selectDictTypeByType(String dictType) {
-        return baseMapper.selectById(new LambdaQueryWrapper<SysDictType>().eq(SysDictType::getDictType, dictType));
+        return baseMapper.selectById(new LambdaQueryWrapper<SysDictType>().eq(SysDictType::getType, dictType));
     }
 
     /**
@@ -126,10 +126,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
         for (Long dictId : dictIds) {
             SysDictType dictType = selectDictTypeById(dictId);
             if (dictDataMapper.exists(new LambdaQueryWrapper<SysDictData>()
-                .eq(SysDictData::getDictType, dictType.getDictType()))) {
-                throw new ServiceException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
+                .eq(SysDictData::getDictType, dictType.getType()))) {
+                throw new ServiceException(String.format("%1$s已分配,不能删除", dictType.getName()));
             }
-            CacheUtils.evict(CacheNames.SYS_DICT, dictType.getDictType());
+            CacheUtils.evict(CacheNames.SYS_DICT, dictType.getType());
         }
         baseMapper.deleteBatchIds(Arrays.asList(dictIds));
     }
@@ -143,7 +143,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
             new LambdaQueryWrapper<SysDictData>().eq(SysDictData::getStatus, UserConstants.DICT_NORMAL));
         Map<String, List<SysDictData>> dictDataMap = StreamUtils.groupByKey(dictDataList, SysDictData::getDictType);
         dictDataMap.forEach((k, v) -> {
-            List<SysDictData> dictList = StreamUtils.sorted(v, Comparator.comparing(SysDictData::getDictSort));
+            List<SysDictData> dictList = StreamUtils.sorted(v, Comparator.comparing(SysDictData::getSort));
             CacheUtils.put(CacheNames.SYS_DICT, k, dictList);
         });
     }
@@ -192,14 +192,14 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<SysDictData> updateDictType(SysDictType dict) {
-        SysDictType oldDict = baseMapper.selectById(dict.getDictId());
+        SysDictType oldDict = baseMapper.selectById(dict.getId());
         dictDataMapper.update(null, new LambdaUpdateWrapper<SysDictData>()
-            .set(SysDictData::getDictType, dict.getDictType())
-            .eq(SysDictData::getDictType, oldDict.getDictType()));
+            .set(SysDictData::getDictType, dict.getType())
+            .eq(SysDictData::getDictType, oldDict.getType()));
         int row = baseMapper.updateById(dict);
         if (row > 0) {
-            CacheUtils.evict(CacheNames.SYS_DICT, oldDict.getDictType());
-            return dictDataMapper.selectDictDataByType(dict.getDictType());
+            CacheUtils.evict(CacheNames.SYS_DICT, oldDict.getType());
+            return dictDataMapper.selectDictDataByType(dict.getType());
         }
         throw new ServiceException("操作失败");
     }
@@ -213,8 +213,8 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     @Override
     public boolean checkDictTypeUnique(SysDictType dict) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysDictType>()
-            .eq(SysDictType::getDictType, dict.getDictType())
-            .ne(ObjectUtil.isNotNull(dict.getDictId()), SysDictType::getDictId, dict.getDictId()));
+            .eq(SysDictType::getType, dict.getType())
+            .ne(ObjectUtil.isNotNull(dict.getId()), SysDictType::getId, dict.getId()));
         return !exist;
     }
 }

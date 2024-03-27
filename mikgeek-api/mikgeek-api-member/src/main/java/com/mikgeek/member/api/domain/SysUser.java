@@ -30,11 +30,6 @@ import java.util.List;
 @TableName("sys_user")
 public class SysUser extends BaseEntity {
 
-    /**
-     * 用户ID
-     */
-    @TableId(value = "user_id")
-    private Long userId;
 
     /**
      * 部门ID
@@ -74,7 +69,7 @@ public class SysUser extends BaseEntity {
      * 手机号码
      */
     @Sensitive(strategy = SensitiveStrategy.PHONE)
-    private String phonenumber;
+    private String mobile;
 
     /**
      * 用户性别
@@ -159,14 +154,14 @@ public class SysUser extends BaseEntity {
     private Long roleId;
 
     public SysUser(Long userId) {
-        this.userId = userId;
+        setId(userId);
     }
 
     /**
      * 是否管理员
      */
     public boolean isAdmin() {
-        return UserConstants.ADMIN_ID.equals(this.userId);
+        return UserConstants.ADMIN_ID.equals(this.getId());
     }
 
 }

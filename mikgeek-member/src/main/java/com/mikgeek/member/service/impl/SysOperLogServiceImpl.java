@@ -32,7 +32,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
     public TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLog operLog, PageQuery pageQuery) {
         Map<String, Object> params = operLog.getParams();
         LambdaQueryWrapper<SysOperLog> lqw = new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLog.getOperIp()), SysOperLog::getOperIp, operLog.getOperIp())
+            .like(StringUtils.isNotBlank(operLog.getIp()), SysOperLog::getIp, operLog.getIp())
             .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
             .eq(operLog.getBusinessType() != null,
                 SysOperLog::getBusinessType, operLog.getBusinessType())
@@ -43,9 +43,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
             })
             .eq(operLog.getStatus() != null,
                 SysOperLog::getStatus, operLog.getStatus())
-            .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
+            .like(StringUtils.isNotBlank(operLog.getUsername()), SysOperLog::getUsername, operLog.getUsername())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysOperLog::getOperTime, params.get("beginTime"), params.get("endTime"));
+                SysOperLog::getTime, params.get("beginTime"), params.get("endTime"));
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("oper_id");
             pageQuery.setIsAsc("desc");
@@ -62,7 +62,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public int insertOperlog(SysOperLog operLog) {
-        operLog.setOperTime(new Date());
+        operLog.setTime(new Date());
         return baseMapper.insert(operLog);
     }
 
@@ -76,7 +76,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
     public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
         Map<String, Object> params = operLog.getParams();
         return baseMapper.selectList(new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLog.getOperIp()), SysOperLog::getOperIp, operLog.getOperIp())
+            .like(StringUtils.isNotBlank(operLog.getIp()), SysOperLog::getIp, operLog.getIp())
             .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
             .eq(operLog.getBusinessType() != null && operLog.getBusinessType() > 0,
                 SysOperLog::getBusinessType, operLog.getBusinessType())
@@ -87,10 +87,10 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
             })
             .eq(operLog.getStatus() != null && operLog.getStatus() > 0,
                 SysOperLog::getStatus, operLog.getStatus())
-            .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
+            .like(StringUtils.isNotBlank(operLog.getUsername()), SysOperLog::getUsername, operLog.getUsername())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysOperLog::getOperTime, params.get("beginTime"), params.get("endTime"))
-            .orderByDesc(SysOperLog::getOperId));
+                SysOperLog::getTime, params.get("beginTime"), params.get("endTime"))
+            .orderByDesc(SysOperLog::getId));
     }
 
     /**

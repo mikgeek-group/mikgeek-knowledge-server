@@ -26,14 +26,14 @@ public class SysOssConfigBo extends BaseEntity {
      * 主建
      */
     @NotNull(message = "主建不能为空", groups = {EditGroup.class})
-    private Long ossConfigId;
+    private Long id;
 
     /**
      * 配置key
      */
     @NotBlank(message = "配置key不能为空", groups = {AddGroup.class, EditGroup.class})
     @Size(min = 2, max = 100, message = "configKey长度必须介于2和20 之间")
-    private String configKey;
+    private String ossKey;
 
     /**
      * accessKey

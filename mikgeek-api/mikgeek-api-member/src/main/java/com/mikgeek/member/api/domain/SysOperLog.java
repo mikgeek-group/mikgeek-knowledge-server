@@ -33,8 +33,8 @@ public class SysOperLog implements Serializable {
      * 日志主键
      */
     @ExcelProperty(value = "日志主键")
-    @TableId(value = "oper_id")
-    private Long operId;
+    @TableId(value = "id")
+    private Long id;
 
     /**
      * 操作模块
@@ -78,7 +78,7 @@ public class SysOperLog implements Serializable {
      * 操作人员
      */
     @ExcelProperty(value = "操作人员")
-    private String operName;
+    private String username;
 
     /**
      * 部门名称
@@ -90,25 +90,25 @@ public class SysOperLog implements Serializable {
      * 请求url
      */
     @ExcelProperty(value = "请求地址")
-    private String operUrl;
+    private String url;
 
     /**
      * 操作地址
      */
     @ExcelProperty(value = "操作地址")
-    private String operIp;
+    private String ip;
 
     /**
      * 操作地点
      */
     @ExcelProperty(value = "操作地点")
-    private String operLocation;
+    private String location;
 
     /**
      * 请求参数
      */
     @ExcelProperty(value = "请求参数")
-    private String operParam;
+    private String param;
 
     /**
      * 返回参数
@@ -133,7 +133,7 @@ public class SysOperLog implements Serializable {
      * 操作时间
      */
     @ExcelProperty(value = "操作时间")
-    private Date operTime;
+    private Date time;
 
     /**
      * 请求参数

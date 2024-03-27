@@ -78,7 +78,7 @@ public class SysConfigController extends BaseController {
     @PostMapping
     public R<Void> add(@Validated @RequestBody SysConfig config) {
         if (!configService.checkConfigKeyUnique(config)) {
-            return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return R.fail("新增参数'" + config.getName() + "'失败，参数键名已存在");
         }
         configService.insertConfig(config);
         return R.ok();
@@ -92,7 +92,7 @@ public class SysConfigController extends BaseController {
     @PutMapping
     public R<Void> edit(@Validated @RequestBody SysConfig config) {
         if (!configService.checkConfigKeyUnique(config)) {
-            return R.fail("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return R.fail("修改参数'" + config.getName() + "'失败，参数键名已存在");
         }
         configService.updateConfig(config);
         return R.ok();

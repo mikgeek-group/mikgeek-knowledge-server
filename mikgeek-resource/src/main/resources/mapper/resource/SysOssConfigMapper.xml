@@ -5,8 +5,8 @@
 <mapper namespace="com.mikgeek.resource.mapper.SysOssConfigMapper">
 
     <resultMap type="com.mikgeek.resource.domain.SysOssConfig" id="SysOssConfigResult">
-        <result property="ossConfigId" column="oss_config_id"/>
-        <result property="configKey" column="config_key"/>
+        <result property="id" column="id"/>
+        <result property="ossKey" column="oss_key"/>
         <result property="accessKey" column="access_key"/>
         <result property="secretKey" column="secret_key"/>
         <result property="bucketName" column="bucket_name"/>

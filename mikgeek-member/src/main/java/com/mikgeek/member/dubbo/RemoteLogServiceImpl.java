@@ -1,9 +1,9 @@
 package com.mikgeek.member.dubbo;
 
 import com.mikgeek.member.api.RemoteLogService;
-import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.api.domain.SysLoginInfo;
 import com.mikgeek.member.api.domain.SysOperLog;
-import com.mikgeek.member.service.ISysLogininforService;
+import com.mikgeek.member.service.ISysLoginInfoService;
 import com.mikgeek.member.service.ISysOperLogService;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class RemoteLogServiceImpl implements RemoteLogService {
 
     private final ISysOperLogService operLogService;
-    private final ISysLogininforService logininforService;
+    private final ISysLoginInfoService logininforService;
 
     @Override
     public Boolean saveLog(SysOperLog sysOperLog) {
@@ -28,7 +28,7 @@ public class RemoteLogServiceImpl implements RemoteLogService {
     }
 
     @Override
-    public Boolean saveLogininfor(SysLogininfor sysLogininfor) {
-        return logininforService.insertLogininfor(sysLogininfor) > 0;
+    public Boolean saveLogininfor(SysLoginInfo sysLogininfo) {
+        return logininforService.insertLogininfor(sysLogininfo) > 0;
     }
 }

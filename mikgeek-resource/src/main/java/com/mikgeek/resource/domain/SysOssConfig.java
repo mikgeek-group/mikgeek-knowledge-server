@@ -16,16 +16,12 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_oss_config")
 public class SysOssConfig extends BaseEntity {
 
-    /**
-     * 主建
-     */
-    @TableId(value = "oss_config_id")
-    private Long ossConfigId;
+
 
     /**
      * 配置key
      */
-    private String configKey;
+    private String ossKey;
 
     /**
      * accessKey

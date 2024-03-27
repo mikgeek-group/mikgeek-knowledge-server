@@ -27,12 +27,6 @@ import javax.validation.constraints.Size;
 @ExcelIgnoreUnannotated
 public class SysConfig extends BaseEntity {
 
-    /**
-     * 参数主键
-     */
-    @ExcelProperty(value = "参数主键")
-    @TableId(value = "config_id")
-    private Long configId;
 
     /**
      * 参数名称
@@ -40,7 +34,7 @@ public class SysConfig extends BaseEntity {
     @ExcelProperty(value = "参数名称")
     @NotBlank(message = "参数名称不能为空")
     @Size(min = 0, max = 100, message = "参数名称不能超过100个字符")
-    private String configName;
+    private String name;
 
     /**
      * 参数键名
@@ -63,7 +57,7 @@ public class SysConfig extends BaseEntity {
      */
     @ExcelProperty(value = "系统内置", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_yes_no")
-    private String configType;
+    private String type;
 
     /**
      * 备注

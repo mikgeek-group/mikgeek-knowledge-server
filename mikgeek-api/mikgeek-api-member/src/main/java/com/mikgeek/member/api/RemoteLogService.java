@@ -1,6 +1,6 @@
 package com.mikgeek.member.api;
 
-import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.api.domain.SysLoginInfo;
 import com.mikgeek.member.api.domain.SysOperLog;
 
 /**
@@ -21,8 +21,8 @@ public interface RemoteLogService {
     /**
      * 保存访问记录
      *
-     * @param sysLogininfor 访问实体
+     * @param sysLogininfo 访问实体
      * @return 结果
      */
-    Boolean saveLogininfor(SysLogininfor sysLogininfor);
+    Boolean saveLogininfor(SysLoginInfo sysLogininfo);
 }

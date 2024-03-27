@@ -51,11 +51,11 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         List<SysOssConfig> list = baseMapper.selectList();
         // 加载OSS初始化配置
         for (SysOssConfig config : list) {
-            String configKey = config.getConfigKey();
+            String configKey = config.getOssKey();
             if ("0".equals(config.getStatus())) {
                 RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, configKey);
             }
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getOssKey(), JsonUtils.toJsonString(config));
         }
     }
 
@@ -74,7 +74,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
 
     private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigBo bo) {
         LambdaQueryWrapper<SysOssConfig> lqw = Wrappers.lambdaQuery();
-        lqw.eq(StringUtils.isNotBlank(bo.getConfigKey()), SysOssConfig::getConfigKey, bo.getConfigKey());
+        lqw.eq(StringUtils.isNotBlank(bo.getOssKey()), SysOssConfig::getOssKey, bo.getOssKey());
         lqw.like(StringUtils.isNotBlank(bo.getBucketName()), SysOssConfig::getBucketName, bo.getBucketName());
         lqw.eq(StringUtils.isNotBlank(bo.getStatus()), SysOssConfig::getStatus, bo.getStatus());
         return lqw;
@@ -86,7 +86,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         validEntityBeforeSave(config);
         boolean flag = baseMapper.insert(config) > 0;
         if (flag) {
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getOssKey(), JsonUtils.toJsonString(config));
         }
         return flag;
     }
@@ -100,10 +100,10 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         luw.set(ObjectUtil.isNull(config.getRegion()), SysOssConfig::getRegion, "");
         luw.set(ObjectUtil.isNull(config.getExt1()), SysOssConfig::getExt1, "");
         luw.set(ObjectUtil.isNull(config.getRemark()), SysOssConfig::getRemark, "");
-        luw.eq(SysOssConfig::getOssConfigId, config.getOssConfigId());
+        luw.eq(SysOssConfig::getId, config.getId());
         boolean flag = baseMapper.update(config, luw) > 0;
         if (flag) {
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getOssKey(), JsonUtils.toJsonString(config));
         }
         return flag;
     }
@@ -112,8 +112,8 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
      * 保存前的数据校验
      */
     private void validEntityBeforeSave(SysOssConfig entity) {
-        if (StringUtils.isNotEmpty(entity.getConfigKey()) && !checkConfigKeyUnique(entity)) {
-            throw new ServiceException("操作配置'" + entity.getConfigKey() + "'失败, 配置key已存在!");
+        if (StringUtils.isNotEmpty(entity.getOssKey()) && !checkConfigKeyUnique(entity)) {
+            throw new ServiceException("操作配置'" + entity.getOssKey() + "'失败, 配置key已存在!");
         }
     }
 
@@ -132,7 +132,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         boolean flag = baseMapper.deleteBatchIds(ids) > 0;
         if (flag) {
             list.forEach(sysOssConfig ->
-                CacheUtils.evict(CacheNames.SYS_OSS_CONFIG, sysOssConfig.getConfigKey()));
+                CacheUtils.evict(CacheNames.SYS_OSS_CONFIG, sysOssConfig.getOssKey()));
         }
         return flag;
     }
@@ -141,11 +141,11 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
      * 判断configKey是否唯一
      */
     private boolean checkConfigKeyUnique(SysOssConfig sysOssConfig) {
-        long ossConfigId = ObjectUtil.isNull(sysOssConfig.getOssConfigId()) ? -1L : sysOssConfig.getOssConfigId();
+        long ossConfigId = ObjectUtil.isNull(sysOssConfig.getId()) ? -1L : sysOssConfig.getId();
         SysOssConfig info = baseMapper.selectOne(new LambdaQueryWrapper<SysOssConfig>()
-            .select(SysOssConfig::getOssConfigId, SysOssConfig::getConfigKey)
-            .eq(SysOssConfig::getConfigKey, sysOssConfig.getConfigKey()));
-        if (ObjectUtil.isNotNull(info) && info.getOssConfigId() != ossConfigId) {
+            .select(SysOssConfig::getId, SysOssConfig::getOssKey)
+            .eq(SysOssConfig::getOssKey, sysOssConfig.getOssKey()));
+        if (ObjectUtil.isNotNull(info) && info.getId() != ossConfigId) {
             return false;
         }
         return true;
@@ -162,7 +162,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
             .set(SysOssConfig::getStatus, "1"));
         row += baseMapper.updateById(sysOssConfig);
         if (row > 0) {
-            RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, sysOssConfig.getConfigKey());
+            RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, sysOssConfig.getOssKey());
         }
         return row;
     }

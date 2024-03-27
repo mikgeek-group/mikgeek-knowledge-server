@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mikgeek.common.core.utils.StringUtils;
 import com.mikgeek.common.mybatis.core.page.PageQuery;
 import com.mikgeek.common.mybatis.core.page.TableDataInfo;
-import com.mikgeek.member.mapper.SysLogininforMapper;
-import com.mikgeek.member.api.domain.SysLogininfor;
-import com.mikgeek.member.service.ISysLogininforService;
+import com.mikgeek.member.mapper.SysLoginInfoMapper;
+import com.mikgeek.member.api.domain.SysLoginInfo;
+import com.mikgeek.member.service.ISysLoginInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +23,24 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService {
+public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
 
-    private final SysLogininforMapper baseMapper;
+    private final SysLoginInfoMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininfor logininfor, PageQuery pageQuery) {
+    public TableDataInfo<SysLoginInfo> selectPageLogininforList(SysLoginInfo logininfor, PageQuery pageQuery) {
         Map<String, Object> params = logininfor.getParams();
-        LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLogininfor::getIpaddr, logininfor.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLogininfor::getStatus, logininfor.getStatus())
-            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLogininfor::getUserName, logininfor.getUserName())
+        LambdaQueryWrapper<SysLoginInfo> lqw = new LambdaQueryWrapper<SysLoginInfo>()
+            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLoginInfo::getIpaddr, logininfor.getIpaddr())
+            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLoginInfo::getStatus, logininfor.getStatus())
+            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLoginInfo::getUserName, logininfor.getUserName())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysLogininfor::getLoginTime, params.get("beginTime"), params.get("endTime"));
+                SysLoginInfo::getLoginTime, params.get("beginTime"), params.get("endTime"));
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("info_id");
             pageQuery.setIsAsc("desc");
         }
-        Page<SysLogininfor> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysLoginInfo> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
 
@@ -50,7 +50,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      * @param logininfor 访问日志对象
      */
     @Override
-    public int insertLogininfor(SysLogininfor logininfor) {
+    public int insertLogininfor(SysLoginInfo logininfor) {
         logininfor.setLoginTime(new Date());
         return baseMapper.insert(logininfor);
     }
@@ -62,15 +62,15 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
+    public List<SysLoginInfo> selectLogininforList(SysLoginInfo logininfor) {
         Map<String, Object> params = logininfor.getParams();
-        return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLogininfor::getIpaddr, logininfor.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLogininfor::getStatus, logininfor.getStatus())
-            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLogininfor::getUserName, logininfor.getUserName())
+        return baseMapper.selectList(new LambdaQueryWrapper<SysLoginInfo>()
+            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLoginInfo::getIpaddr, logininfor.getIpaddr())
+            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLoginInfo::getStatus, logininfor.getStatus())
+            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLoginInfo::getUserName, logininfor.getUserName())
             .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysLogininfor::getLoginTime, params.get("beginTime"), params.get("endTime"))
-            .orderByDesc(SysLogininfor::getInfoId));
+                SysLoginInfo::getLoginTime, params.get("beginTime"), params.get("endTime"))
+            .orderByDesc(SysLoginInfo::getId));
     }
 
     /**

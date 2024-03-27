@@ -29,15 +29,11 @@ public class TableDataInfo<T> implements Serializable {
      */
     private List<T> rows;
 
-    /**
-     * 消息状态码
-     */
-    private int code;
 
     /**
-     * 消息内容
+     * 总页数
      */
-    private String msg;
+    private Long pageCount;
 
     /**
      * 分页
@@ -52,17 +48,14 @@ public class TableDataInfo<T> implements Serializable {
 
     public static <T> TableDataInfo<T> build(IPage<T> page) {
         TableDataInfo<T> rspData = new TableDataInfo<>();
-        rspData.setCode(HttpStatus.HTTP_OK);
-        rspData.setMsg("查询成功");
         rspData.setRows(page.getRecords());
         rspData.setTotal(page.getTotal());
+        rspData.setPageCount(page.getPages());
         return rspData;
     }
 
     public static <T> TableDataInfo<T> build(List<T> list) {
         TableDataInfo<T> rspData = new TableDataInfo<>();
-        rspData.setCode(HttpStatus.HTTP_OK);
-        rspData.setMsg("查询成功");
         rspData.setRows(list);
         rspData.setTotal(list.size());
         return rspData;
@@ -70,8 +63,6 @@ public class TableDataInfo<T> implements Serializable {
 
     public static <T> TableDataInfo<T> build() {
         TableDataInfo<T> rspData = new TableDataInfo<>();
-        rspData.setCode(HttpStatus.HTTP_OK);
-        rspData.setMsg("查询成功");
         return rspData;
     }
 

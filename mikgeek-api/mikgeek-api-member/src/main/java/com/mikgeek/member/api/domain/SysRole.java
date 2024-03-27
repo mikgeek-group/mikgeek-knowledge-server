@@ -31,12 +31,6 @@ import javax.validation.constraints.Size;
 @ExcelIgnoreUnannotated
 public class SysRole extends BaseEntity {
 
-    /**
-     * 角色ID
-     */
-    @ExcelProperty(value = "角色序号")
-    @TableId(value = "role_id")
-    private Long roleId;
 
     /**
      * 角色名称
@@ -44,7 +38,7 @@ public class SysRole extends BaseEntity {
     @ExcelProperty(value = "角色名称")
     @NotBlank(message = "角色名称不能为空")
     @Size(min = 0, max = 30, message = "角色名称长度不能超过30个字符")
-    private String roleName;
+    private String name;
 
     /**
      * 角色权限
@@ -59,7 +53,7 @@ public class SysRole extends BaseEntity {
      */
     @ExcelProperty(value = "角色排序")
     @NotNull(message = "显示顺序不能为空")
-    private Integer roleSort;
+    private Integer sort;
 
     /**
      * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
@@ -115,14 +109,14 @@ public class SysRole extends BaseEntity {
     private Long[] deptIds;
 
     public SysRole(Long roleId) {
-        this.roleId = roleId;
+        setId(roleId);
     }
 
     /**
      * 是否管理员
      */
     public boolean isAdmin() {
-        return UserConstants.ADMIN_ID.equals(this.roleId);
+        return UserConstants.ADMIN_ID.equals(this.getId());
     }
 
 }

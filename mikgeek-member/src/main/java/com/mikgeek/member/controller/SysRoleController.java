@@ -46,8 +46,8 @@ public class SysRoleController extends BaseController {
      */
     @SaCheckPermission("system:role:list")
     @GetMapping("/list")
-    public TableDataInfo<SysRole> list(SysRole role, PageQuery pageQuery) {
-        return roleService.selectPageRoleList(role, pageQuery);
+    public R<TableDataInfo<SysRole>> list(SysRole role, PageQuery pageQuery) {
+        return R.ok(roleService.selectPageRoleList(role, pageQuery));
     }
 
     /**
@@ -82,9 +82,9 @@ public class SysRoleController extends BaseController {
     public R<Void> add(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
         if (!roleService.checkRoleNameUnique(role)) {
-            return R.fail("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+            return R.fail("新增角色'" + role.getName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
-            return R.fail("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
+            return R.fail("新增角色'" + role.getName() + "'失败，角色权限已存在");
         }
         return toAjax(roleService.insertRole(role));
 
@@ -98,17 +98,17 @@ public class SysRoleController extends BaseController {
     @PutMapping
     public R<Void> edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
-        roleService.checkRoleDataScope(role.getRoleId());
+        roleService.checkRoleDataScope(role.getId());
         if (!roleService.checkRoleNameUnique(role)) {
-            return R.fail("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
+            return R.fail("修改角色'" + role.getName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
-            return R.fail("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
+            return R.fail("修改角色'" + role.getName() + "'失败，角色权限已存在");
         }
         if (roleService.updateRole(role) > 0) {
-            roleService.cleanOnlineUserByRole(role.getRoleId());
+            roleService.cleanOnlineUserByRole(role.getId());
             return R.ok();
         }
-        return R.fail("修改角色'" + role.getRoleName() + "'失败，请联系管理员");
+        return R.fail("修改角色'" + role.getName() + "'失败，请联系管理员");
     }
 
     /**
@@ -119,7 +119,7 @@ public class SysRoleController extends BaseController {
     @PutMapping("/dataScope")
     public R<Void> dataScope(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
-        roleService.checkRoleDataScope(role.getRoleId());
+        roleService.checkRoleDataScope(role.getId());
         return toAjax(roleService.authDataScope(role));
     }
 
@@ -131,7 +131,7 @@ public class SysRoleController extends BaseController {
     @PutMapping("/changeStatus")
     public R<Void> changeStatus(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
-        roleService.checkRoleDataScope(role.getRoleId());
+        roleService.checkRoleDataScope(role.getId());
         return toAjax(roleService.updateRoleStatus(role));
     }
 

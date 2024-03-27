@@ -5,11 +5,11 @@
 <mapper namespace="com.mikgeek.member.mapper.SysMenuMapper">
 
     <resultMap type="SysMenu" id="SysMenuResult">
-        <id property="menuId" column="menu_id"/>
-        <result property="menuName" column="menu_name"/>
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
         <result property="parentName" column="parent_name"/>
         <result property="parentId" column="parent_id"/>
-        <result property="orderNum" column="order_num"/>
+        <result property="sort" column="sort"/>
         <result property="path" column="path"/>
         <result property="component" column="component"/>
         <result property="queryParam" column="query_param"/>

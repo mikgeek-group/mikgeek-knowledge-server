@@ -2,6 +2,7 @@ package com.mikgeek.common.core.web.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -21,6 +22,13 @@ import java.util.Map;
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+
+    /**
+     * 岗位序号
+     */
+    @TableId(value = "id")
+    private Long id;
 
     /**
      * 搜索值

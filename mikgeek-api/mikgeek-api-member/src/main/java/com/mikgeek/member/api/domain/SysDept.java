@@ -29,21 +29,21 @@ public class SysDept extends TreeEntity<SysDept> {
     /**
      * 部门ID
      */
-    @TableId(value = "dept_id")
-    private Long deptId;
+    @TableId(value = "id")
+    private Long id;
 
     /**
      * 部门名称
      */
     @NotBlank(message = "部门名称不能为空")
     @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
-    private String deptName;
+    private String name;
 
     /**
      * 显示顺序
      */
     @NotNull(message = "显示顺序不能为空")
-    private Integer orderNum;
+    private Integer sort;
 
     /**
      * 负责人

@@ -33,10 +33,10 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
     public Set<String> getRolePermission(SysUser user) {
         Set<String> roles = new HashSet<String>();
         // 管理员拥有所有权限
-        if (LoginHelper.isAdmin(user.getUserId())) {
+        if (LoginHelper.isAdmin(user.getId())) {
             roles.add("admin");
         } else {
-            roles.addAll(roleService.selectRolePermissionByUserId(user.getUserId()));
+            roles.addAll(roleService.selectRolePermissionByUserId(user.getId()));
         }
         return roles;
     }
@@ -51,10 +51,10 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
     public Set<String> getMenuPermission(SysUser user) {
         Set<String> perms = new HashSet<String>();
         // 管理员拥有所有权限
-        if (LoginHelper.isAdmin(user.getUserId())) {
+        if (LoginHelper.isAdmin(user.getId())) {
             perms.add("*:*:*");
         } else {
-            perms.addAll(menuService.selectMenuPermsByUserId(user.getUserId()));
+            perms.addAll(menuService.selectMenuPermsByUserId(user.getId()));
         }
         return perms;
     }

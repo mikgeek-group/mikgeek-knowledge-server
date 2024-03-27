@@ -24,6 +24,7 @@ import com.mikgeek.member.service.ISysMenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -31,13 +32,15 @@ import java.util.*;
  *
  * @author mikgeek
  */
-@RequiredArgsConstructor
 @Service
 public class SysMenuServiceImpl implements ISysMenuService {
 
-    private final SysMenuMapper baseMapper;
-    private final SysRoleMapper roleMapper;
-    private final SysRoleMenuMapper roleMenuMapper;
+    @Resource
+    private SysMenuMapper baseMapper;
+    @Resource
+    private SysRoleMapper roleMapper;
+    @Resource
+    private SysRoleMenuMapper roleMenuMapper;
 
     /**
      * 根据用户查询系统菜单列表
@@ -62,15 +65,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 管理员显示所有菜单信息
         if (LoginHelper.isAdmin(userId)) {
             menuList = baseMapper.selectList(new LambdaQueryWrapper<SysMenu>()
-                .like(StringUtils.isNotBlank(menu.getMenuName()), SysMenu::getMenuName, menu.getMenuName())
+                .like(StringUtils.isNotBlank(menu.getName()), SysMenu::getName, menu.getName())
                 .eq(StringUtils.isNotBlank(menu.getVisible()), SysMenu::getVisible, menu.getVisible())
                 .eq(StringUtils.isNotBlank(menu.getStatus()), SysMenu::getStatus, menu.getStatus())
                 .orderByAsc(SysMenu::getParentId)
-                .orderByAsc(SysMenu::getOrderNum));
+                .orderByAsc(SysMenu::getSort));
         } else {
             QueryWrapper<SysMenu> wrapper = Wrappers.query();
             wrapper.eq("sur.user_id", userId)
-                .like(StringUtils.isNotBlank(menu.getMenuName()), "m.menu_name", menu.getMenuName())
+                .like(StringUtils.isNotBlank(menu.getName()), "m.menu_name", menu.getName())
                 .eq(StringUtils.isNotBlank(menu.getVisible()), "m.visible", menu.getVisible())
                 .eq(StringUtils.isNotBlank(menu.getStatus()), "m.status", menu.getStatus())
                 .orderByAsc("m.parent_id")
@@ -161,7 +164,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             router.setPath(getRouterPath(menu));
             router.setComponent(getComponent(menu));
             router.setQuery(menu.getQueryParam());
-            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
+            router.setMeta(new MetaVo(menu.getName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
             List<SysMenu> cMenus = menu.getChildren();
             if (CollUtil.isNotEmpty(cMenus) && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
@@ -174,12 +177,12 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 children.setPath(menu.getPath());
                 children.setComponent(menu.getComponent());
                 children.setName(StringUtils.capitalize(menu.getPath()));
-                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
+                children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
                 children.setQuery(menu.getQueryParam());
                 childrenList.add(children);
                 router.setChildren(childrenList);
             } else if (menu.getParentId().intValue() == 0 && isInnerLink(menu)) {
-                router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
+                router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
                 router.setPath("/");
                 List<RouterVo> childrenList = new ArrayList<RouterVo>();
                 RouterVo children = new RouterVo();
@@ -187,7 +190,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 children.setPath(routerPath);
                 children.setComponent(UserConstants.INNER_LINK);
                 children.setName(StringUtils.capitalize(routerPath));
-                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getPath()));
+                children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), menu.getPath()));
                 childrenList.add(children);
                 router.setChildren(childrenList);
             }
@@ -208,10 +211,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
             return CollUtil.newArrayList();
         }
         return TreeBuildUtils.build(menus, (menu, tree) ->
-            tree.setId(menu.getMenuId())
+            tree.setId(menu.getId())
                 .setParentId(menu.getParentId())
-                .setName(menu.getMenuName())
-                .setWeight(menu.getOrderNum()));
+                .setName(menu.getName())
+                .setWeight(menu.getSort()));
     }
 
     /**
@@ -290,9 +293,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public boolean checkMenuNameUnique(SysMenu menu) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysMenu>()
-            .eq(SysMenu::getMenuName, menu.getMenuName())
+            .eq(SysMenu::getName, menu.getName())
             .eq(SysMenu::getParentId, menu.getParentId())
-            .ne(ObjectUtil.isNotNull(menu.getMenuId()), SysMenu::getMenuId, menu.getMenuId()));
+            .ne(ObjectUtil.isNotNull(menu.getId()), SysMenu::getId, menu.getId()));
         return !exist;
     }
 
@@ -424,7 +427,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * 得到子节点列表
      */
     private List<SysMenu> getChildList(List<SysMenu> list, SysMenu t) {
-        return StreamUtils.filter(list, n -> n.getParentId().equals(t.getMenuId()));
+        return StreamUtils.filter(list, n -> n.getParentId().equals(t.getId()));
     }
 
     /**

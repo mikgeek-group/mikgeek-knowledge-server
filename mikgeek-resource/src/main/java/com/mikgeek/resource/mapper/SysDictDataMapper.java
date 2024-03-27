@@ -19,7 +19,7 @@ public interface SysDictDataMapper extends BaseMapperPlus<SysDictDataMapper, Sys
             new LambdaQueryWrapper<SysDictData>()
                 .eq(SysDictData::getStatus, UserConstants.DICT_NORMAL)
                 .eq(SysDictData::getDictType, dictType)
-                .orderByAsc(SysDictData::getDictSort));
+                .orderByAsc(SysDictData::getSort));
     }
 
 }

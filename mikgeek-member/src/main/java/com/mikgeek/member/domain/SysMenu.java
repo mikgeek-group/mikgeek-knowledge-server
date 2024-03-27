@@ -27,21 +27,21 @@ public class SysMenu extends TreeEntity<SysMenu> {
     /**
      * 菜单ID
      */
-    @TableId(value = "menu_id")
-    private Long menuId;
+    @TableId(value = "id")
+    private Long id;
 
     /**
      * 菜单名称
      */
     @NotBlank(message = "菜单名称不能为空")
     @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
-    private String menuName;
+    private String name;
 
     /**
      * 显示顺序
      */
     @NotNull(message = "显示顺序不能为空")
-    private Integer orderNum;
+    private Integer sort;
 
     /**
      * 路由地址

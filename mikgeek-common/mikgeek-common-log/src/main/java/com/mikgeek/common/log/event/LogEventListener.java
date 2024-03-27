@@ -2,7 +2,7 @@ package com.mikgeek.common.log.event;
 
 import com.mikgeek.common.core.utils.BeanCopyUtils;
 import com.mikgeek.member.api.RemoteLogService;
-import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.api.domain.SysLoginInfo;
 import com.mikgeek.member.api.domain.SysOperLog;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.context.event.EventListener;
@@ -33,8 +33,8 @@ public class LogEventListener {
     @Async
     @EventListener
     public void saveLogininfor(LogininforEvent logininforEvent) {
-        SysLogininfor sysLogininfor = BeanCopyUtils.copy(logininforEvent, SysLogininfor.class);
-        remoteLogService.saveLogininfor(sysLogininfor);
+        SysLoginInfo sysLogininfo = BeanCopyUtils.copy(logininforEvent, SysLoginInfo.class);
+        remoteLogService.saveLogininfor(sysLogininfo);
     }
 
 }

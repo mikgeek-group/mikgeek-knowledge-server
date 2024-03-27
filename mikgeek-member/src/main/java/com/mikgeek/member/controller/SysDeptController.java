@@ -48,7 +48,7 @@ public class SysDeptController extends BaseController {
     @GetMapping("/list/exclude/{deptId}")
     public R<List<SysDept>> excludeChild(@PathVariable(value = "deptId", required = false) Long deptId) {
         List<SysDept> depts = deptService.selectDeptList(new SysDept());
-        depts.removeIf(d -> d.getDeptId().intValue() == deptId
+        depts.removeIf(d -> d.getId().intValue() == deptId
             || StringUtils.splitList(d.getAncestors()).contains(Convert.toStr(deptId)));
         return R.ok(depts);
     }
@@ -73,7 +73,7 @@ public class SysDeptController extends BaseController {
     @PostMapping
     public R<Void> add(@Validated @RequestBody SysDept dept) {
         if (!deptService.checkDeptNameUnique(dept)) {
-            return R.fail("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+            return R.fail("新增部门'" + dept.getName() + "'失败，部门名称已存在");
         }
         return toAjax(deptService.insertDept(dept));
     }
@@ -85,12 +85,12 @@ public class SysDeptController extends BaseController {
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public R<Void> edit(@Validated @RequestBody SysDept dept) {
-        Long deptId = dept.getDeptId();
+        Long deptId = dept.getId();
         deptService.checkDeptDataScope(deptId);
         if (!deptService.checkDeptNameUnique(dept)) {
-            return R.fail("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+            return R.fail("修改部门'" + dept.getName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(deptId)) {
-            return R.fail("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
+            return R.fail("修改部门'" + dept.getName() + "'失败，上级部门不能是自己");
         } else if (StringUtils.equals(UserConstants.DEPT_DISABLE, dept.getStatus())) {
             if (deptService.selectNormalChildrenDeptById(deptId) > 0) {
                 return R.fail("该部门包含未停用的子部门!");

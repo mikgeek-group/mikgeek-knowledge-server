@@ -173,7 +173,7 @@ public class SysOssServiceImpl implements ISysOssService {
         SysOss oss = BeanUtil.toBean(bo, SysOss.class);
         boolean flag = baseMapper.insert(oss) > 0;
         if (flag) {
-            bo.setOssId(oss.getOssId());
+            bo.setOssId(oss.getId());
         }
         return flag;
     }

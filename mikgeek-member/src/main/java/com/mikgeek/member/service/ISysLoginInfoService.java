@@ -2,7 +2,7 @@ package com.mikgeek.member.service;
 
 import com.mikgeek.common.mybatis.core.page.PageQuery;
 import com.mikgeek.common.mybatis.core.page.TableDataInfo;
-import com.mikgeek.member.api.domain.SysLogininfor;
+import com.mikgeek.member.api.domain.SysLoginInfo;
 
 import java.util.List;
 
@@ -11,16 +11,16 @@ import java.util.List;
  *
  * @author mikgeek
  */
-public interface ISysLogininforService {
+public interface ISysLoginInfoService {
 
-    TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininfor logininfor, PageQuery pageQuery);
+    TableDataInfo<SysLoginInfo> selectPageLogininforList(SysLoginInfo logininfor, PageQuery pageQuery);
 
     /**
      * 新增系统登录日志
      *
      * @param logininfor 访问日志对象
      */
-    int insertLogininfor(SysLogininfor logininfor);
+    int insertLogininfor(SysLoginInfo logininfor);
 
     /**
      * 查询系统登录日志集合
@@ -28,7 +28,7 @@ public interface ISysLogininforService {
      * @param logininfor 访问日志对象
      * @return 登录记录集合
      */
-    List<SysLogininfor> selectLogininforList(SysLogininfor logininfor);
+    List<SysLoginInfo> selectLogininforList(SysLoginInfo logininfor);
 
     /**
      * 批量删除系统登录日志

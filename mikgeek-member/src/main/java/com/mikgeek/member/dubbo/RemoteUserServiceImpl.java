@@ -53,8 +53,8 @@ public class RemoteUserServiceImpl implements RemoteUserService {
     @Override
     public LoginUser getUserInfoByPhonenumber(String phonenumber) throws UserException {
         SysUser sysUser = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
-            .select(SysUser::getPhonenumber, SysUser::getStatus)
-            .eq(SysUser::getPhonenumber, phonenumber));
+            .select(SysUser::getMobile, SysUser::getStatus)
+            .eq(SysUser::getMobile, phonenumber));
         if (ObjectUtil.isNull(sysUser)) {
             throw new UserException("user.not.exists", phonenumber);
         }
@@ -69,7 +69,7 @@ public class RemoteUserServiceImpl implements RemoteUserService {
     @Override
     public LoginUser getUserInfoByEmail(String email) throws UserException {
         SysUser user = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
-            .select(SysUser::getPhonenumber, SysUser::getStatus)
+            .select(SysUser::getMobile, SysUser::getStatus)
             .eq(SysUser::getEmail, email));
         if (ObjectUtil.isNull(user)) {
             throw new UserException("user.not.exists", email);
@@ -95,7 +95,7 @@ public class RemoteUserServiceImpl implements RemoteUserService {
         // 框架登录不限制从什么表查询 只要最终构建出 LoginUser 即可
         // 此处可根据登录用户的数据不同 自行创建 loginUser 属性不够用继承扩展就行了
         XcxLoginUser loginUser = new XcxLoginUser();
-        loginUser.setUserId(sysUser.getUserId());
+        loginUser.setUserId(sysUser.getId());
         loginUser.setUsername(sysUser.getUserName());
         loginUser.setUserType(sysUser.getUserType());
         loginUser.setOpenid(openid);
@@ -121,14 +121,14 @@ public class RemoteUserServiceImpl implements RemoteUserService {
      */
     private LoginUser buildLoginUser(SysUser user) {
         LoginUser loginUser = new LoginUser();
-        loginUser.setUserId(user.getUserId());
+        loginUser.setUserId(user.getId());
         loginUser.setDeptId(user.getDeptId());
         loginUser.setUsername(user.getUserName());
         loginUser.setPassword(user.getPassword());
         loginUser.setUserType(user.getUserType());
         loginUser.setMenuPermission(permissionService.getMenuPermission(user));
         loginUser.setRolePermission(permissionService.getRolePermission(user));
-        loginUser.setDeptName(ObjectUtil.isNull(user.getDept()) ? "" : user.getDept().getDeptName());
+        loginUser.setDeptName(ObjectUtil.isNull(user.getDept()) ? "" : user.getDept().getName());
         List<RoleDTO> roles = BeanUtil.copyToList(user.getRoles(), RoleDTO.class);
         loginUser.setRoles(roles);
         return loginUser;

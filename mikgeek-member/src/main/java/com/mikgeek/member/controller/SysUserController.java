@@ -81,7 +81,7 @@ public class SysUserController extends BaseController {
             SysDept dept = list.get(i).getDept();
             SysUserExportVo vo = listVo.get(i);
             if (ObjectUtil.isNotEmpty(dept)) {
-                vo.setDeptName(dept.getDeptName());
+                vo.setDeptName(dept.getName());
                 vo.setLeader(dept.getLeader());
             }
         }
@@ -147,7 +147,7 @@ public class SysUserController extends BaseController {
             SysUser sysUser = userService.selectUserById(userId);
             ajax.put("user", sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
-            ajax.put("roleIds", StreamUtils.toList(sysUser.getRoles(), SysRole::getRoleId));
+            ajax.put("roleIds", StreamUtils.toList(sysUser.getRoles(), SysRole::getId));
         }
         return R.ok(ajax);
     }
@@ -162,7 +162,7 @@ public class SysUserController extends BaseController {
         deptService.checkDeptDataScope(user.getDeptId());
         if (!userService.checkUserNameUnique(user)) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
-        } else if (StringUtils.isNotEmpty(user.getPhonenumber())
+        } else if (StringUtils.isNotEmpty(user.getMobile())
             && !userService.checkPhoneUnique(user)) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
@@ -181,11 +181,11 @@ public class SysUserController extends BaseController {
     @PutMapping
     public R<Void> edit(@Validated @RequestBody SysUser user) {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        userService.checkUserDataScope(user.getId());
         deptService.checkDeptDataScope(user.getDeptId());
         if (!userService.checkUserNameUnique(user)) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
-        } else if (StringUtils.isNotEmpty(user.getPhonenumber())
+        } else if (StringUtils.isNotEmpty(user.getMobile())
             && !userService.checkPhoneUnique(user)) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
@@ -218,7 +218,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/resetPwd")
     public R<Void> resetPwd(@RequestBody SysUser user) {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        userService.checkUserDataScope(user.getId());
         user.setPassword(BCrypt.hashpw(user.getPassword()));
         return toAjax(userService.resetPwd(user));
     }
@@ -231,7 +231,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/changeStatus")
     public R<Void> changeStatus(@RequestBody SysUser user) {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        userService.checkUserDataScope(user.getId());
         return toAjax(userService.updateUserStatus(user));
     }
 

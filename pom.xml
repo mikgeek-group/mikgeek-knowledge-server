@@ -349,11 +349,13 @@
         <module>mikgeek-gateway</module>
         <module>mikgeek-visual</module>
         <module>mikgeek-resource</module>
+        <module>mikgeek-knowledge</module>
         <module>mikgeek-member</module>
         <module>mikgeek-job</module>
         <module>mikgeek-api</module>
         <module>mikgeek-common</module>
         <module>mikgeek-example</module>
+        <module>mikgeek-payment</module>
     </modules>
     <packaging>pom</packaging>
 
